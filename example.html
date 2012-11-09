@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html lang="EN" class="sb-html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Javascript Calendar Example</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="jquery.calendar.js"></script>
+<style>
+
+body {
+    font: normal 12px Verdana, sans-serif;
+}
+
+#container {
+    width: 358px;
+    margin: 0 auto;
+}
+
+.calendar-head {
+    position: relative;
+    height: 20px;
+}
+
+.calendar-months {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.calendar-years {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.calendar-years > span,
+.calendar-months > span {
+    vertical-align: middle;
+}
+
+.calendar-button {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.calendar-previous-month, 
+.calendar-previous-year {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAVNQTFRF/////v7+/f79z+nUesKISqxePaZSTK1gfsSM1OzZ8fnzb71/F5UxDpAoEpIsFJMuGZYzecKI9vv3/v/+8PjyQqlXBYwhHJc1G5c0HZg2G5YzBIwfTq5iZbl2Bo0hIZk6FpQvHpg3G5Y0Ipo6BYwgc7+CvuHFE5MsIZk5CI4jgcaPS61eB40iFZQvE5MtEpMsGZUyGJUxzOjRDJAnWbNr2O3cyefPyufQyObOzejTRapZeMGHOaVPDpEpP6dU7vfw/f7+UrBkCI0jSKtcLZ9EvOHE+/37+/38+v36+Pz5UbBkCo4kOqVPDZAoTa5g9fr2VbFnZLh1Co8l0OnVw+TKxuXNxuXMxeTLzejSdsGFvODDIJk5jMuZSaxdEZIrY7h0Ipo7GpYzcL6A7/jxQKhVHZc2BIwgS61f9fv2bLx8dsCFy+fRdcCER6tbOqVQSaxc0erWWIV80gAAAAFiS0dEAIgFHUgAAAAJcEhZcwAAAEgAAABIAEbJaz4AAADhSURBVAjXHY9ZQwFhGIXPTLSIr0h9X5ghTYsayyCyDGraRbtC0l60/v+r3um5eO/Oe54DSDJGHM7RsfEJyBIgwTXp9rAp5pn2+jAD+GfnOOeCzweCIR8ARQ1HFqJCCL6oLQHLK6uxtXU9nkgmWcpIQ2GZLDZy6Xxus1BUSyiblSpqlKOztW1hx9zF3v4BcYij+jHKjeYJlRIyTnULZ+xcwcXlVat1fWNpbXRYN3bb0xJ3RMqdB/p617h/ICXqf6TY07NKdoK/RF/f3m1//yBi2v7G8P8x7fv4/Pr+cfza+/4AZl8iwnzYMUMAAAA7dEVYdGNvbW1lbnQARWRpdGVkIGJ5IFBhdWwgU2hlcm1hbiBmb3IgV1BDbGlwYXJ0LCBQdWJsaWMgRG9tYWluNM36qgAAACV0RVh0Y3JlYXRlLWRhdGUAMjAwOS0wMi0xOFQwNToyMjo1OS0wNTowMNESPJQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTItMTAtMjRUMjI6NDE6MDAtMDc6MDCk5MO3AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDEyLTEwLTI0VDIyOjQxOjAwLTA3OjAw1bl7CwAAACV0RVh0bW9kaWZ5LWRhdGUAMjAwOS0wMi0xOFQwNToyMjo1OS0wNTowMI6jSqAAAAAASUVORK5CYII=);
+}
+
+.calendar-next-month, 
+.calendar-next-year {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAVNQTFRF/////v7+/f791OzZfsSMTK1gPaZSSqxeesKIz+nU/v/+9vv3ecKIGZYzDpAoEpIsFJMuF5Uxb71/8fnzTq5iBIwfG5YzHZg2HJc1G5c0BYwhQqlX8Pjyc7+CBYwgIpo6G5Y0Hpg3FpQvIZk6Bo0hZbl2zOjRGJUxGZUyEpMsE5MtFZQvB40iS61egcaPCI4jIZk5E5MsvuHFeMGHRapZzejTyObOyefPyufQ2O3cWbNrDJAnSKtcCI0jUrBk/f7+7vfwP6dUDpEpOaVPOqVPCo4kUbBk+Pz5+v36+/38+/37vOHELZ9EVbFn9fr2Ta5gDZAodsGFzejSxeTLxuXMxuXNw+TK0OnVCo8lZLh1EZIrSaxdjMuZIJk5vODDcL6AGpYzIpo7Y7h09fv2S61fBIwgHZc2QKhV7/jxdsCFbLx80erWSaxcOqVQR6tbdcCEy+fRtOjeiQAAAAFiS0dEAIgFHUgAAAAJcEhZcwAAAEgAAABIAEbJaz4AAADiSURBVAjXY2BgZGJgZmFlY+fgZGBiZGDgYuDm4eXjF+DnExQSZgAKcIuIiolLSEpISEhJyzAwMMjKyUtISkoqKCopq6gyMKipa/Brampp6+jq6RsYGjEYq5iYmplbqJlbMlhZ86sy2NjaMdgDtQEJB0cnZwYXVzcGdw8g8PRi8HbyYbDR8WVgAskzMvj5BzgzBMrZBAWHhISGhTOoRvBHMlgIakQBgZZcdIx+LH8cA0M80H4gSEhUj9VJAupLTklVSAO6T1JCJT0DbEymOsj9TkpZMiD3A/2XzZGTm5dfAPIfAF8dIrdrOEgyAAAAO3RFWHRjb21tZW50AEVkaXRlZCBieSBQYXVsIFNoZXJtYW4gZm9yIFdQQ2xpcGFydCwgUHVibGljIERvbWFpbjTN+qoAAAAldEVYdGNyZWF0ZS1kYXRlADIwMDktMDItMThUMDU6MjI6NTktMDU6MDDREjyUAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEyLTEwLTI0VDIyOjQxOjAwLTA3OjAwpOTDtwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxMi0xMC0yNFQyMjo0MTowMC0wNzowMNW5ewsAAAAldEVYdG1vZGlmeS1kYXRlADIwMDktMDItMThUMDU6MjI6NTktMDU6MDCOo0qgAAAAAElFTkSuQmCC);
+}
+
+.calendar-table {
+    border-collapse: collapse;
+}
+
+.calendar-table thead td {
+    font-weight: bold;
+    text-align: center;
+    width: 50px;
+    border-bottom: solid 1px #999999;
+}
+
+.calendar-table tbody td {
+    vertical-align: top;
+    width: 40px;
+    padding: 5px;
+    height: 40px;
+    border: solid 1px #999999;
+} 
+
+.calendar-day-previous,
+.calendar-day-next {
+    color: #cccccc;
+}
+
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h1> Calendar Example </h1>
+    <div id="calendar-div"></div>
+</div>
+
+<script>
+$(document).ready(function()
+{
+    var calendar = new jqueryCalendar();
+    calendar.append("#calendar-div");
+
+
+});
+</script>
+
+</body>
+</html>
