@@ -1,5 +1,6 @@
-function jqueryCalendar()
+function jqueryCalendar(selector)
 {
+    this.node = $(selector);
     var self = this;
 
     /* Cache Lifespan in Seconds
@@ -48,9 +49,8 @@ function jqueryCalendar()
         this.start_date = new Date(year, month, 1);
     }
 
-    this.append = function(node)
+    this.append = function()
     {
-        this.node = $(node);
         var template;
         template  = '<div class="calendar">';
         template += '<div class="calendar-head">';

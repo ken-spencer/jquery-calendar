@@ -15,8 +15,8 @@ Include script *after* the jQuery library:
     <div id="calendar-div"></div>
 
     // Draw a calendar in the above div
-    var calendar = new jqueryCalendar();
-    calendar.append("#calendar-div");
+    var calendar = new jqueryCalendar("#calendar-div");
+    calendar.append();
 
 ## Authors
     
