@@ -1,5 +1,13 @@
-function jqueryCalendar(selector)
+function jqueryCalendar(selector, options)
 {
+    var defaultOptions = {
+        months : true,
+        years : true
+    };
+
+    this.options = $.extend(true, defaultOptions, options);
+        
+
     this.node = $(selector);
     var self = this;
 
@@ -28,9 +36,6 @@ function jqueryCalendar(selector)
         'December'
     ];
     
-    this.toggleMonth = true;
-    this.toggleYear = true;
-    
     this.offset = 0;
 
     if (window.Cache && this.cache_ttl) {
@@ -55,10 +60,10 @@ function jqueryCalendar(selector)
         template  = '<div class="calendar">';
         template += '<div class="calendar-head">';
 
-        if (this.toggleMonth) {
+        if (this.options.months) {
             template += '<div class="calendar-months">';
             template += '<span class="calendar-button calendar-previous-month"></span>';
-            if (this.toggleYear == false) {   
+            if (this.options.years == false) {   
                 template += '<span class="calendar-month-year">';
                 template += '<span class="calendar-month"></span>';
                 template += ' <span class="calendar-year"></span>';
@@ -70,13 +75,12 @@ function jqueryCalendar(selector)
             template += '</div>';
         }
 
-        if (this.toggleYear) {
+        if (this.options.years) {
             template += '<div class="calendar-years">';
             template += '<span class="calendar-button calendar-previous-year"></span>';
             template += '<span class="calendar-year"></span>';
             template += '<span class="calendar-button calendar-next-year"></span>';
             template += '</div>';
-        
         }
 
         template += '</div>';
