@@ -1,7 +1,7 @@
 function jqueryCalendar(selector, options)
 {
     var defaultOptions = {
-        months : true,
+        dates : true,
         years : true
     };
 
@@ -60,7 +60,7 @@ function jqueryCalendar(selector, options)
         template  = '<div class="calendar">';
         template += '<div class="calendar-head">';
 
-        if (this.options.months) {
+        if (this.options.dates) {
             template += '<div class="calendar-months">';
             template += '<span class="calendar-button calendar-previous-month"></span>';
             if (this.options.years == false) {   
@@ -75,7 +75,7 @@ function jqueryCalendar(selector, options)
             template += '</div>';
         }
 
-        if (this.options.years) {
+        if (this.options.dates && this.options.years) {
             template += '<div class="calendar-years">';
             template += '<span class="calendar-button calendar-previous-year"></span>';
             template += '<span class="calendar-year"></span>';
@@ -97,8 +97,19 @@ function jqueryCalendar(selector, options)
         template += '</table>';
         template += '</div></div>';
         
-        this.node.append(template)
-        .on('click', '.calendar-previous-month', function()
+        this.node.append(template);
+        
+        this.calendar = $(".calendar", this.node);
+        
+        if (this.options.dates) {
+            this.calendar.addClass('calendar-toggle-months');
+        }
+
+        if (this.options.years) {
+            this.calendar.addClass('calendar-toggle-years');
+        }
+        
+        this.calendar.on('click', '.calendar-previous-month', function()
         {
             self.previous();
         })
